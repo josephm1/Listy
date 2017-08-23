@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Safe Web Dir</title>
+	<meta name="theme-color" content="#5792CC">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="blue">
+	<meta name="apple-mobile-web-app-title" content="Safe Web Dir">
+	<link rel="apple-touch-icon" href="icon.png">
+
+	<link rel="manifest" href="/manifest.json">
+
+	<link rel="stylesheet" href="materialize.min.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+
+	<h1>Safe Web Directory</h1>
+
+	<i id="refresh" class="material-icons md-48 refresh ">refresh</i>
+
+	<div class="container">
+
+		<!-- the upload web card modal -->
+		<div id="uploadmodal" class="modal modal-fixed-footer">
+			<div class="modal-content uploadmodal">
+				<div class="row">
+					<form class="col s12">
+
+						<div class="row">
+							<div class="input-field col s1">
+								<p>safe://</p>
+							</div>
+							<div class="input-field col s5">
+								<input id="service" type="text" placeholder="Safe service">
+							</div>
+							<div class="input-field col">
+								<p>.</p>
+							</div>
+							<div class="input-field col s4">
+								<input id="publicID" type="text" placeholder="Public ID Name">
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="title" type="text" data-length="50" placeholder="Title">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s12">
+								<textarea id="description" class="materialize-textarea" data-length="300" placeholder="Description"></textarea>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+
+			<div class="modal-footer uploadfooter">
+				<a id="upload" class="modal-action waves-effect waves-yellow btn-flat yellow-text">Upload</a>
+				<a id="cancel" class="modal-action waves-effect waves-yellow btn-flat yellow-text">Cancel</a>
+			</div>
+		</div>
+
+
+
+		<!-- list of websites -->
+		<center>
+			<div id="webCards">
+				<p>It takes a little while to load, good things come to those who wait.</p>
+			</div>
+		</center>
+
+	</div>
+
+	<!-- floating action button  -->
+	<a class="btn-floating btn-large waves-effect waves-light yellow fab" data-target="uploadmodal">
+		<i class="material-icons blue-text">file_upload</i>
+	</a>
+
+	<p class="credit">By Joseph Meagher</p>
+
+	<script src="jquery.min.js"></script>
+	<script src="materialize.min.js"></script>
+	<script src="main.js"></script>
+</body>
+
+</html>
