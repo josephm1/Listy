@@ -65,7 +65,7 @@ input:focus, #description:focus {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(./fonts/icons.woff2) format('woff2');
+  src: url(fonts/icons.woff2) format('woff2');
 }
 
 .material-icons {

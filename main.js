@@ -19,7 +19,7 @@ $(document).ready(function() {
   });
 
   var app = {
-    name: "Safe Web Dir",
+    name: "Listy",
     id: "joe",
     version: "1",
     vendor: "joe"
@@ -42,12 +42,12 @@ $(document).ready(function() {
 });
 
 function getMutableDataHandle(invokeFun) {
-  var name = "safewebdir";
+  var name = "listy";
   window.safeCrypto.sha3Hash(auth, name)
     .then((hash) =>
-      window.safeMutableData.newPublic(auth, hash, 5432100))
+      window.safeMutableData.newPublic(auth, hash, 54321))
     .then((mdHandle) => {
-      safeDirHandle = mdHandle;
+      listyHandle = mdHandle;
       if (invokeFun === "getWebCards") {
         getWebCards();
       } else if (invokeFun === "uploadWebCard") {
@@ -57,7 +57,7 @@ function getMutableDataHandle(invokeFun) {
 }
 
 function getWebCards() {
-  window.safeMutableData.getEntries(safeDirHandle)
+  window.safeMutableData.getEntries(listyHandle)
     .then((entriesHandle) => {
       webCards.innerHTML = "";
       var date = new Date();
@@ -109,19 +109,28 @@ function getWebCards() {
                   url.length < 100 &&
                   typeof url === "string") {
 
-                  console.log('Key: ', uintToString(key));
-                  console.log('Value: ', webCardItems);
-                  $("#webCards").append('<div class="row"><div class="card-panel yellow webcard"><a align="left" href="' +
-                    url + '" class="h5 blue-text title">' +
-                    title + '</a><p align="left" class="blue-text description">' +
-                    description + '</p></div></div>');
+                  window.safeApp.webFetch(appHandle, url + '/index.html')
+                    .then((data) => {
+                      console.log('Web page content retrieved: ', data.toString());
+                      if (
+                        typeof url === "string" &&
+                        url > 20) {
+
+                        console.log('Key: ', uintToString(key));
+                        console.log('Value: ', webCardItems);
+                        $("#webCards").append('<div class="row"><div class="card-panel yellow webcard"><a align="left" href="' +
+                          url + '" class="h5 blue-text title">' +
+                          title + '</a><p align="left" class="blue-text description">' +
+                          description + '</p></div></div>');
+                      }
+                    });
                 }
               }
             }
           })
         .then(_ => {
           window.safeMutableDataEntries.free(entriesHandle);
-          window.safeMutableData.free(safeDirHandle);
+          window.safeMutableData.free(listyHandle);
         });
     }, (err) => {
       console.error(err);
@@ -151,11 +160,11 @@ function checkForms() {
 
 function authorise() {
   if (authorised === false) {
-    window.safeMutableData.free(safeDirHandle);
+    window.safeMutableData.free(listyHandle);
     window.safeApp.free(auth);
     auth = "";
     var app = {
-      name: "Safe Web Dir",
+      name: "Listy",
       id: "joe",
       version: "1",
       vendor: "joe",
@@ -199,12 +208,12 @@ function uploadWebCard() {
       console.log("Your upload card: " + webCard);
       window.safeMutableDataMutation.insert(mutationHandle, time.toString(), JSON.stringify(webCard))
         .then(_ =>
-          window.safeMutableData.applyEntriesMutation(safeDirHandle, mutationHandle))
+          window.safeMutableData.applyEntriesMutation(listyHandle, mutationHandle))
         .then(_ => {
           $('#uploadmodal').modal('close');
           Materialize.toast('Web Card has been uploaded', 3000, 'rounded');
           window.safeMutableDataMutation.free(mutationHandle);
-          window.safeMutableData.free(safeDirHandle);
+          window.safeMutableData.free(listyHandle);
           getMutableDataHandle("getWebCards");
         });
     }, (err) => {
