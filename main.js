@@ -171,7 +171,7 @@ function authorise() {
     };
 
     var permissions = {
-      '_public': []
+      '_public': ['Read']
     };
 
     window.safeApp.initialise(app)
