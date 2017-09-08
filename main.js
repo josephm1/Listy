@@ -22,7 +22,7 @@ $(document).ready(function() {
     name: "Listy",
     id: "joe",
     version: "1",
-    vendor: "joe"
+    vendor: "joe.listy"
   };
 
 
@@ -62,6 +62,16 @@ function getWebCards() {
       webCards.innerHTML = "";
       var date = new Date();
       var time = date.getTime();
+      var safeurls = [];
+
+      function checkUrls(item) {
+        if (item == this) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+
       window.safeMutableDataEntries.forEach(entriesHandle,
           (key, value) => {
 
@@ -86,7 +96,6 @@ function getWebCards() {
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
 
-
               var url = webCardItems.url;
 
               var keys = Object.keys(webCardItems);
@@ -94,7 +103,12 @@ function getWebCards() {
                 keys.length === 3 &&
                 keys[0] === "title" &&
                 keys[1] === "description" &&
-                keys[2] === "url") {
+                keys[2] === "url" &&
+
+                safeurls.every(checkUrls, [url]) === true
+              ) {
+
+                safeurls.push(url);
 
                 if (
                   title.length !== 0 &&
@@ -109,20 +123,19 @@ function getWebCards() {
                   url.length < 100 &&
                   typeof url === "string") {
 
-                  window.safeApp.webFetch(appHandle, url + '/index.html')
+                  window.safeApp.webFetch(auth, url + '/index.html')
                     .then((data) => {
-                      console.log('Web page content retrieved: ', data.toString());
-                      if (
-                        typeof url === "string" &&
-                        url > 20) {
 
-                        console.log('Key: ', uintToString(key));
-                        console.log('Value: ', webCardItems);
-                        $("#webCards").append('<div class="row"><div class="card-panel yellow webcard"><a align="left" href="' +
-                          url + '" class="h5 blue-text title">' +
-                          title + '</a><p align="left" class="blue-text description">' +
-                          description + '</p></div></div>');
-                      }
+                      console.log('Key: ', uintToString(key));
+                      console.log('Value: ', webCardItems);
+                      $("#webCards").append('<div class="row"><div class="card-panel yellow webcard"><a align="left" href="' +
+                        url + '" class="h5 blue-text title">' +
+                        title + '</a><p align="left" class="blue-text description">' +
+                        description + '</p></div></div>');
+
+                    }, (err) => {
+                      console.log("No website found at " + url);
+                      console.error(err);
                     });
                 }
               }
@@ -167,7 +180,7 @@ function authorise() {
       name: "Listy",
       id: "joe",
       version: "1",
-      vendor: "joe",
+      vendor: "joe.listy",
     };
 
     var permissions = {
