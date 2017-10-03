@@ -113,8 +113,8 @@ async function getWebCards() {
                 console.log('Key: ', uintToString(key));
                 console.log('Value: ', webCardItems);
 
-                $("#webCards").append('<div class="row"><div class="card-panel yellow webcard"><a align="left" href="' +
-                  url + '" class="h5 blue-text title">' +
+                $("#webCards").append('<div class="card-panel yellow webcard item"><a align="left" href="' +
+                  url + '" class="blue-text title">' +
                   title + '</a><p align="left" class="blue-text description">' +
                   description + '</p></div></div>');
               }, (err) => {
