@@ -117,20 +117,20 @@ async function getWebCards() {
 						url.length < 100 &&
 						typeof url === 'string'
 					) {
-						window.safeApp.webFetch(auth, url + '/index.html').then(
+						window.safeApp.webFetch(auth, url).then(
 							data => {
-								console.log('Key: ', uintToString(key));
-								console.log('Value: ', webCardItems);
-
 								$('#webCards').append(
-									'<div class="card-panel accent-colour item"><a align="left" href="' +
+									'<div class="card-panel dark-primary-colour item"><a class="tooltipped accent-text-colour" data-position="bottom" data-tooltip="' +
 										url +
-										'" class="primary-text-colour">' +
+										'" href="' +
+										url +
+										'" >' +
 										title +
-										'</a><p align="left" class="primary-text-colour description">' +
+										'</a><p align="left" class="accent-text-colour description">' +
 										description +
 										'</p></div>'
 								);
+								$('.tooltipped').tooltip();
 							},
 							err => {
 								console.log('No website found at ' + url);

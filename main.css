@@ -61,6 +61,11 @@ main {
 	padding: 5px;
 }
 
+a:link {
+	color: var(--accentColor);
+	text-decoration: underline;
+}
+
 input:focus,
 textarea:focus {
 	border-bottom-width: 1px;
@@ -68,6 +73,13 @@ textarea:focus {
 	border-bottom-color: var(--accentColor) !important;
 	box-shadow: var(--accentColor) !important;
 }
+
+.material-tooltip,
+.backdrop {
+	background-color: var(--primaryColor);
+	color: var(--accentColor);
+}
+
 /*input range styles */
 input[type='range'] {
 	border: 0 !important;
